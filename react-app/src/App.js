@@ -1,10 +1,9 @@
-import IterationSample from "./components/IterationSample";
-import Todo from "./components/Axios";
+import Bootstrap from "./components/Bootstrap";
 
 function App() {
   return (
     <>
-      <Todo />
+      <Bootstrap />
     </>
   );
 }
