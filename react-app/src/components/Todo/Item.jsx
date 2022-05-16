@@ -1,14 +1,20 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Item = (props) => {
-  const { id, text } = props.data;
+const Item = ({ data, onDelete, onChecked }) => {
+  const { id, text, isDone } = data;
+  const handleClick = () => onDelete(id);
+  const handleChange = () => {
+    //   1. data의 현재 isDone값을 반대로 <- 구현
+    //   2. input의 value(체크여부)를 isDone으로
+    onChecked(id);
+  };
   return (
     <Container key={id}>
       <label>
-        <input type="checkbox" />
-        <Content>{text}</Content>
+        <input type="checkbox" checked={isDone} onChange={handleChange} />
+        <Content isDone={isDone}>{text}</Content>
       </label>
-      <BtnDelete onClick={() => props.onDelete(id)}>삭제</BtnDelete>
+      <BtnDelete onClick={handleClick}>삭제</BtnDelete>
     </Container>
   );
 };
@@ -21,7 +27,17 @@ const Container = styled.li`
     border-top: 1px solid #efefef;
   }
 `;
-const Content = styled.span``;
+const Content = styled.span`
+  /* color: ${(props) => props.isDone && "#ddd"};
+  text-decoration: ${({ isDone }) => isDone && "line-through"}; */
+
+  ${({ isDone }) =>
+    isDone &&
+    css`
+      color: #ddd;
+      text-decoration: line-through;
+    `}
+`;
 const BtnDelete = styled.button``;
 
 export default Item;

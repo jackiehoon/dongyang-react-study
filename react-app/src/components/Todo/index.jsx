@@ -1,37 +1,43 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
-
+import Form from "./Form";
 import Item from "./Item";
 
 const Todo = () => {
   const [list, setList] = useState([]);
-  const [text, setText] = useState("");
   const nextId = useRef(1);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleAdd = (text) => {
     // 텍스트를 리스트에 추가하는 코드
-    const nextList = [...list, { id: nextId.current, text }];
+    const nextList = [...list, { id: nextId.current, text, isDone: false }];
     setList(nextList);
-    setText("");
     nextId.current++;
   };
   const handleDelete = (id) => {
     const nextList = list.filter((item) => item.id !== id);
     setList(nextList);
   };
+  const handleChecked = (id) => {
+    // id로 item 찾아서 isDone 값을 반대로 바꿔주기
+    const newList = list.map((item) =>
+      item.id === id ? { ...item, isDone: !item.isDone } : item
+    );
+    setList(newList);
+  };
   return (
     <Layout>
       <Container>
         <Title>일정 관리</Title>
-        <Form onSubmit={handleSubmit}>
-          <InputText onChange={(e) => setText(e.target.value)} value={text} />
-          <BtnSubmit>추가</BtnSubmit>
-        </Form>
+        <Form onAdd={handleAdd} />
         <Body>
           <List>
-            {list.map((item, i) => (
-              <Item data={item} onDelete={handleDelete} />
+            {list.map((item) => (
+              <Item
+                key={item.id}
+                data={item}
+                onDelete={handleDelete}
+                onChecked={handleChecked}
+              />
             ))}
           </List>
         </Body>
@@ -56,14 +62,6 @@ const Title = styled.div`
   color: #fff;
   padding: 10px;
 `;
-
-const Form = styled.form`
-  display: flex;
-`;
-const InputText = styled.input`
-  flex: 1;
-`;
-const BtnSubmit = styled.button``;
 
 const Body = styled.div`
   background: #fff;

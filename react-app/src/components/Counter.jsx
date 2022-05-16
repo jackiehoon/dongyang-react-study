@@ -4,7 +4,10 @@ const Counter = () => {
   const [number, setNumber] = useState(5);
 
   const handleClick = () => {
-    setNumber(number + 1);
+    setNumber((prev) => prev + 1);
+    setNumber((prev) => prev + 1);
+    setNumber((prev) => prev + 1);
+    setNumber((prev) => prev + 1);
     console.log(number);
   };
 
