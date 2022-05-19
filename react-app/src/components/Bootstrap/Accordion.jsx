@@ -5,11 +5,6 @@ const Accordion = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const handleClick = (index) => {
     // 이미 열려있는거 클릭하면 모두 닫기
-    // if (index === activeIndex) {
-    //   setActiveIndex(-1);
-    // } else {
-    //   setActiveIndex(index);
-    // }
     const nextIndex = index === activeIndex ? -1 : index;
     setActiveIndex(nextIndex);
   };

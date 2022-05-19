@@ -51,6 +51,7 @@ const Button = styled.button`
 const Menu = styled.ul`
   display: ${({ isActive }) => !isActive && "none"};
   position: absolute;
+  z-index: 10;
   top: 45px;
   background: #fff;
   margin: 0;
